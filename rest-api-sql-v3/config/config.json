@@ -1,0 +1,14 @@
+{
+  "development": {
+   "storage": "fsjstd-restapi.db",
+    "dialect": "sqlite"
+  },
+  "test": {
+    "strage": "test.sqlite",
+    "dialect": "sqlite"
+  },
+  "production": {
+    "strage": "production.sqlite",
+    "dialect": "sqlite"
+  }
+}
