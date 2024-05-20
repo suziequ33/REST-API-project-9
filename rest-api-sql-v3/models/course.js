@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const { all } = require('../routes/userRoutes');
 
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
@@ -18,13 +19,32 @@ module.exports = (sequelize, DataTypes) => {
     };
   }
   Course.init({
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    estimatedTime: DataTypes.STRING,
-    materialsNeeded: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Course',
-  });
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Title is required'
+        },
+      },
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Description is required'
+        },
+      },
+    },
+    estimatedTime: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    materialsNeeded: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  }, { sequelize, modelName: 'Course', });
   return Course;
 };
