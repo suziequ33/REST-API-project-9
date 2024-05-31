@@ -1,6 +1,5 @@
 'use strict';
 const { Model } = require('sequelize');
-const { all } = require('../routes/userRoutes');
 
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
@@ -12,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Course.belongsTo(models.User, {
-        foreignKey: {
-          userId: 'id',
-        },
+        foreignKey: 'userId',
       });
     };
   }
