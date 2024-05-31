@@ -21,51 +21,37 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'A First name is requires'
-        },
-        notEmpty: {
-          msg: 'Please provid a name'
-        },
+        notNull: { msg: 'A First name is requires' },
+        notEmpty: { msg: 'Please provid a name' },
       },
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: 'A last name is required'
-        },
-        notEmpty: {
-          msg: 'Please provide a last name'
-        },
+        notNull: { msg: 'A last name is required' },
+        notEmpty: { msg: 'Please provide a last name' },
       },
     },
     emailAddress: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        msg: 'The email you entered already exists'
-      },
+      unique: { msg: 'The email you entered already exists' },
       validate: {
-        notNull: {
-          msg: 'An email is required'
-        },
-        isEmail: {
-          msg: 'Please provide a valid email address'
-        },
+        notNull: { msg: 'An email is required' },
+        isEmail: { msg: 'Please provide a valid email address' },
       },
     },
     password: {
-      type: DataTypes.VIRTUAL,
+      type: DataTypes.STRING,
       allowNull: false,
+      set(val) {
+        const hashedPassword = bcrypt.hashSync(val, 10);
+        this.setDataValue('password', hashedPassword);
+      },
       validate: {
-        notNull: {
-          msg: 'A password is required'
-        },
-        notEmpty: {
-          msg: 'Please provide a password'
-        },
+        notNull: { msg: 'A password is required' },
+        notEmpty: { msg: 'Please provide a password' },
       },
     },
   }, { sequelize, modelName: 'User', });

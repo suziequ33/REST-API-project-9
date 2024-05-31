@@ -8,6 +8,9 @@ const morgan = require('morgan');
 const userRoutes = require('./routes/users');
 const courseRoutes = require('./routes/courses');
 
+//Import the user authentication middleware
+const { authenticateUser } = require('./middleware/auth-user');
+
 //import the sequelize instance from models/index.js
 const { sequelize } = require('./models/index');
 
@@ -27,6 +30,9 @@ app.get('/', (req, res) => {
     message: 'Welcome to the REST API project!',
   });
 });
+
+//Apply the user authentication middleware before the user routes
+app.use('/api/users', authenticateUser, userRoutes);
 
 //Routes
 app.use('/api/users', userRoutes);
