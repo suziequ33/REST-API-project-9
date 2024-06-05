@@ -8,10 +8,8 @@ const { asyncHandler } = require('../middleware/async-handler');
 router.get('/', asyncHandler(async (req, res) => {
     //get all courses with associated user data
     const courses = await Course.findAll({
-        include: {
-            model: User,
-            attributes: ['id', 'firstName', 'lastName', 'emailAddress'] //Include only necessary user attributes
-        }
+        //Include only necessary user attributes
+        include: [{ model: User, attributes: ['id', 'firstName', 'lastName', 'emailAddress'] }],
     });
     //return courses
     res.status(200).json(courses);
